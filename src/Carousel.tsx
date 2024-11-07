@@ -2,142 +2,88 @@ import news1 from "./images/canimi-sikti-diyerek-sirin-i-olduren-cani-icin_18002
 import news2 from "./images/chp-nin-6-okundan-biri-milliyetciliktir_18001845_3772_z1.webp"
 import news3 from "./images/dolmabahce-de-ilk-duduk-caldi_18002487_3348_z1.webp"
 import news4 from "./images/premier-lig-de-hesabi-acti_18002447_6079_z1.webp"
-import news5 from "./images/yol-verilmeyen-ambulansla-ilgili-gercek-cok-baska_18002288_8464_z1.webp"
 
-export default function Carousel() {
-    return (
-        <div id="default-carousel" className="mb-3 relative aspect-video m-auto lg:w-3/5 lg:m-0 " data-carousel="slide">
-            {/* Carousel wrapper */}
-            <div className="relative h-full overflow-hidden rounded-lg">
-                {/* Item 1 */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item="">
-                    <img
-                        src={news1}
-                        className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="..."
-                    />
+import { useState, useEffect } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
+const carouselItems = [
+  { image: news1, title: 'Beautiful Landscape' },
+  { image: news2, title: 'City Skyline' },
+  { image: news3, title: 'Mountain View' },
+  { image: news4, title: 'Serene Beach' },
+]
+
+function Carousel() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + carouselItems.length) % carouselItems.length)
+  }
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000) // Her 5 saniyede bir geçiş yapar
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="relative w-full max-w-3xl mx-auto">
+      <div className="overflow-hidden rounded-lg">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {carouselItems.map((item, index) => (
+            <div key={index} className="w-full flex-shrink-0">
+              <a href="#" className="block p-0 relative">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full aspect-video object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4">
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
                 </div>
-                {/* Item 2 */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item="">
-                    <img
-                        src={news2}
-                        className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="..."
-                    />
-                </div>
-                {/* Item 3 */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item="">
-                    <img
-                        src={news3}
-                        className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="..."
-                    />
-                </div>
-                {/* Item 4 */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item="">
-                    <img
-                        src={news4}
-                        className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="..."
-                    />
-                </div>
-                {/* Item 5 */}
-                <div className="hidden duration-700 ease-in-out" data-carousel-item="">
-                    <img
-                        src={news5}
-                        className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="..."
-                    />
-                </div>
+              </a>
             </div>
-            {/* Slider indicators */}
-            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                <button
-                    type="button"
-                    className="w-3 h-3 rounded-full"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                    data-carousel-slide-to={0}
-                />
-                <button
-                    type="button"
-                    className="w-3 h-3 rounded-full"
-                    aria-current="false"
-                    aria-label="Slide 2"
-                    data-carousel-slide-to={1}
-                />
-                <button
-                    type="button"
-                    className="w-3 h-3 rounded-full"
-                    aria-current="false"
-                    aria-label="Slide 3"
-                    data-carousel-slide-to={2}
-                />
-                <button
-                    type="button"
-                    className="w-3 h-3 rounded-full"
-                    aria-current="false"
-                    aria-label="Slide 4"
-                    data-carousel-slide-to={3}
-                />
-                <button
-                    type="button"
-                    className="w-3 h-3 rounded-full"
-                    aria-current="false"
-                    aria-label="Slide 5"
-                    data-carousel-slide-to={4}
-                />
-            </div>
-            {/* Slider controls */}
-            <button
-                type="button"
-                className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-prev=""
-            >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg
-                        className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 1 1 5l4 4"
-                        />
-                    </svg>
-                    <span className="sr-only">Previous</span>
-                </span>
-            </button>
-            <button
-                type="button"
-                className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                data-carousel-next=""
-            >
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                    <svg
-                        className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                    >
-                        <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="m1 9 4-4-4-4"
-                        />
-                    </svg>
-                    <span className="sr-only">Next</span>
-                </span>
-            </button>
+          ))}
         </div>
+      </div>
 
-    )
+      <button
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full"
+        onClick={prevSlide}
+      >
+        <ChevronLeft className="h-4 w-4" />
+        <span className="sr-only">Previous slide</span>
+      </button>
+
+      <button
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full"
+        onClick={nextSlide}
+      >
+        <ChevronRight className="h-4 w-4" />
+        <span className="sr-only">Next slide</span>
+      </button>
+
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {carouselItems.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full ${
+              index === currentIndex ? 'bg-white' : 'bg-gray-400'
+            }`}
+            onClick={() => setCurrentIndex(index)}
+          >
+            <span className="sr-only">Go to slide {index + 1}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
 }
+
+export default Carousel
