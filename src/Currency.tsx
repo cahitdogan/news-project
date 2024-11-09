@@ -10,28 +10,42 @@ interface CurrencyData {
     CHF: string;
 }
 
+interface ErrorState {
+    toggle: boolean;
+    content: string
+}
+
 export default function Currency() {
-    const [currencyData, setCurrencyData] = useState<CurrencyData>({});
-    const [loading, setLoading] = useState(true);
+    const [currencyData, setCurrencyData] = useState<CurrencyData>({} as CurrencyData);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<ErrorState>({toggle: false, content: ""});
     
     fetch(`https://api.currencyapi.com/v3/latest?apikey=${key}&currencies=EUR%2CUSD%2CCAD%2CAUD%2CGBP%2CCNY%2CCHF&base_currency=TRY`)
         .then(response => {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error("Currency network error!");
+                throw new Error(response.status.toString());
             }
         })
         .then(data => {
                 setCurrencyData(data);
                 setLoading(false);
         })
-        .catch(error => {
+        .catch((err) => {
+            if (err.message === "429") {
+                setError({toggle: true, content: "Error: 429 \n Çok fazla istek sebebiyle API yanıt veremiyor."});
+                setLoading(false);
+            }
             console.log(error);
         });
 
     if (loading) {
         return <p className="lg:flex-grow">Loading...</p>;
+    }
+
+    if (error.toggle) {
+        return <p className="lg:flex-grow">{error.content}</p>;
     }
 
     return (
