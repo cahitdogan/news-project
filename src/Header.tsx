@@ -11,6 +11,7 @@ function Logo() {
 
 type SearchProps = {
     searchPopupToggle: boolean;
+    setSearchPopupToggle: (x: boolean) => void;
 }
 
 function Search({ setSearchPopupToggle, searchPopupToggle }: SearchProps) {
@@ -37,7 +38,7 @@ function Search({ setSearchPopupToggle, searchPopupToggle }: SearchProps) {
     );
 }
 
-export default function Header({ searchPopupToggle, setSearchPopupToggle}) {
+export default function Header({ searchPopupToggle, setSearchPopupToggle}: SearchProps) {
     return (
         <header className="flex justify-between p-2 h-14 mb-7">
             <Logo/>

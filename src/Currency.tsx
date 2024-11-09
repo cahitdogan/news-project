@@ -1,9 +1,17 @@
 import { useState } from "react";
-
 const key = import.meta.env.VITE_CURRENCY_API_KEY;
 
+interface CurrencyData {
+    USD: string;
+    EUR: string;
+    AUD: string;
+    GBP: string;
+    CNY: string;
+    CHF: string;
+}
+
 export default function Currency() {
-    const [currencyData, setCurrencyData] = useState({});
+    const [currencyData, setCurrencyData] = useState<CurrencyData>({});
     const [loading, setLoading] = useState(true);
     
     fetch(`https://api.currencyapi.com/v3/latest?apikey=${key}&currencies=EUR%2CUSD%2CCAD%2CAUD%2CGBP%2CCNY%2CCHF&base_currency=TRY`)

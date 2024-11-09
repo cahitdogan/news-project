@@ -5,7 +5,7 @@ import HeroSection from "./HeroSection.tsx";
 import MainSection from "./MainSection.tsx";
 
 function App() {
-  const [searchPopupToggle, setSearchPopupToggle] = useState(false);
+  const [searchPopupToggle, setSearchPopupToggle] = useState<boolean>(false);
 
   return (
     <div className="max-w-6xl m-auto">

@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
+interface Article {
+    urlToImage: string;
+    title: string;
+    url: string;
+}
+
 export default function Carousel() {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
