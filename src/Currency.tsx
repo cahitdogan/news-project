@@ -34,7 +34,7 @@ export default function Currency() {
         })
         .catch((err) => {
             if (err.message === "429") {
-                setError({toggle: true, content: "Error: 429 \n Çok fazla istek sebebiyle API yanıt veremiyor."});
+                setError({toggle: true, content: "Error: 429 \n Çok fazla istek sebebiyle Currency API yanıt veremiyor."});
                 setLoading(false);
             }
             console.log(error);
