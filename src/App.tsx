@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./Header.tsx";
+import Header from "./components/Header";
 import SearchPopup from "./SearchPopup.tsx";
 import HeroSection from "./HeroSection.tsx";
 import MainSection from "./MainSection.tsx";
